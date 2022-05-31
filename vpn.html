@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.staticfile.org/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    </head>
+    <body>
+        <p>CUGB 马翘楚vpn 工具</p>
+        <div>使用方法：在下面文本框内填入要访问的域名（不带前后缀），点击按钮。</div>
+        <div>
+            <input value="cugb.edu.cn" type="text" id="url-input">
+            <button id="convert">获取WebVPN链接</button>
+        </div>
+        <a id="converted-link" href="https://cugb.edu.cn/">用中国地质大学大学WebVPN打开cugb.edu.cn</a>
+        <div>免责声明：本工具仅用于生成WebVPN链接，用于其他用途后果自负。</div>
+        <script>document.getElementById("convert").onclick = () =>
+{
+    const url = document.getElementById("url-input").value;
+    const key_iv = CryptoJS.enc.Utf8.parse("wrdvpnisthebest!");
+    const res = "https://elib.cugb.edu.cn/http/77726476706e69737468656265737421"
+    + CryptoJS.AES.encrypt(
+        url, 
+        key_iv, {
+            iv: key_iv,
+            mode: CryptoJS.mode.CFB,
+            padding: CryptoJS.pad.ZeroPadding
+        }).ciphertext.toString().substr(0, url.length<<1);
+    document.getElementById("converted-link").setAttribute("href", res);
+    document.getElementById("converted-link").innerHTML = "用中国地质大学WebVPN打开" + url;
+}</script>
+    </body>
+</html>
